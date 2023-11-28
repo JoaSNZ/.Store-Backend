@@ -3,7 +3,6 @@ import { Product } from "./product"
 import { User } from "./user"
 import "reflect-metadata"
 
-
 export const AppDataSource = new DataSource({
     type: 'mysql',
     host: 'localhost',

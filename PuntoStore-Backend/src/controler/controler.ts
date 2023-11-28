@@ -1,7 +1,8 @@
 import { Response, Request } from 'express'
-import { AppDataSource, db, Producto, udb } from '../persistance/db';
+import { AppDataSource, db, Producto} from '../persistance/db';
 import { Product } from '../persistance/product';
 import { User } from '../persistance/user';
+
 
 export const getProducts = async (_: Request, res: Response) => {
     const products = await AppDataSource.manager.find(Product);
@@ -15,22 +16,38 @@ export const addProductsToDB = async () => {
     });
 }
 
-export const addUserToDB = async () => {    
-    //const { formData } = req.body;
+export const addUserToDB = async (req: Request, res: Response) => {
+    const { formData } = req.body;
 
-    udb.map(async (u: User) => {
-        const newUser = new User(u.username, u.email, u.password, u.password2);
-        await AppDataSource.manager.save(newUser);
-    });
-}
+    const username = formData.usuario;
+    const email = formData.email;
+    const password = formData.password;
+
+    try {
+            const newUser = new User(username, email, password, password);
+
+            try {
+                await AppDataSource.manager.save(newUser);
+
+                return res.status(201).json({ message: 'Te registraste' });
+            } catch (error) {
+                console.error('Error al registrar el usuario:', error);
+                return res.status(400).json({ error: 'Error al conectar con la base de datos' });
+            }
+        } catch (err) {
+        console.error('Error al registrar el usuario:', err);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }  
+};
+
 
 export const loginUser = async (req: Request, res: Response) => {
-    const { username, password } = req.body
-    const user = await AppDataSource.manager.findOne(User, { where: { username, password } });
+    const { email, password } = req.body
+    const user = await AppDataSource.manager.findOne(User, { where: { email, password } });
     if (user) {
         res.json({
             success: true,
-            msg: "Logged"
+            msg: "Logged",
         });       
     } else {
         res.status(401).json({
