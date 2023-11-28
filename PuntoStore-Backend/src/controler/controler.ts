@@ -19,7 +19,7 @@ export const addProductsToDB = async () => {
 export const addUserToDB = async (req: Request, res: Response) => {
     const { formData } = req.body;
 
-    const username = formData.usuario;
+    const username = formData.username;
     const email = formData.email;
     const password = formData.password;
 
@@ -31,7 +31,7 @@ export const addUserToDB = async (req: Request, res: Response) => {
 
                 return res.status(201).json({ message: 'Te registraste' });
             } catch (error) {
-                console.error('Error al registrar el usuario:', error);
+                console.error('Error al registrarse:', error);
                 return res.status(400).json({ error: 'Error al conectar con la base de datos' });
             }
         } catch (err) {
