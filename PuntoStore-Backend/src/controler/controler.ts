@@ -60,13 +60,13 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const addCartToDB = async (req: Request, res: Response) => {
     
-    const { jsonifiedCart } = req.body;
+    const { carritoRegistrado } = req.body;
 
     try {
 
-        const cartEntity = new Cart(jsonifiedCart);
+        const entidad = new Cart(carritoRegistrado);
 
-        await AppDataSource.manager.save(Cart, cartEntity);
+        await AppDataSource.manager.save(Cart, entidad);
 
         return res.status(201).json({ message: 'Carrito registrado' });
 
