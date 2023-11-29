@@ -2,6 +2,7 @@ import { DataSource } from "typeorm"
 import { Product } from "./product"
 import { User } from "./user"
 import "reflect-metadata"
+import { Cart } from "./carrito"
 
 export const AppDataSource = new DataSource({
     type: 'mysql',
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
     database: 'puntostoredb',
     synchronize: true,
     logging: true,
-    entities: [Product, User],
+    entities: [Product, User, Cart],
     subscribers: [],
     migrations: []
 })
@@ -33,6 +34,11 @@ export type Usuario = {
     password2: string
 }
 
+export type Carrito = {
+    id: number
+    cart: string
+}
+
 export const db:Array <Producto> = [
     {
         id: 1,
@@ -49,5 +55,11 @@ export const udb:Array <Usuario> = [
         email: "dulce@gmail.com",
         password: "dulce123",
         password2: "dulce123"
+    }
+]
+export const cdb:Array <Carrito> = [
+    {
+        id:1,
+        cart: "Reloj"
     }
 ]
