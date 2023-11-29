@@ -18,11 +18,11 @@ export const addProductsToDB = async () => {
 }
 
 export const addUserToDB = async (req: Request, res: Response) => {
-    const { formData } = req.body;
-    const username = formData.username;
-    const email = formData.email;
-    const password = formData.password;
-    const password2 = formData.password2;
+    const { userData } = req.body;
+    const username = userData.username;
+    const email = userData.email;
+    const password = userData.password;
+    const password2 = userData.password2;
 
     try {
             const newUser = new User(username, email, password, password2);
